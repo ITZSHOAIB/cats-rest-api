@@ -1,6 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
 
-const connectToDatabase = async (uri: string) => {
+const connectToDatabase = async (uri: string): Promise<void> => {
   try {
     await mongoose.connect(uri, {
       useNewUrlParser: true,

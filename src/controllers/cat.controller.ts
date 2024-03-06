@@ -2,25 +2,26 @@ import catService from "../services/cat.service";
 import fs from "fs";
 import path from "path";
 import { catchAsync } from "../utils/catchAsync";
+import { Request, Response } from "express";
 
-const uploadCatImage = catchAsync(async (req: any, res: any) => {
+const uploadCatImage = catchAsync(async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
   }
 
   const { filename } = req.file;
   const { name, breed } = req.body;
-  const createdCat = await catService.saveCat(name, breed, filename);
+  const createdCat = await catService.saveCat({ name, breed, image: filename });
 
   res.status(201).send(createdCat);
 });
 
-const getCats = catchAsync(async (req: any, res: any) => {
+const getCats = catchAsync(async (req: Request, res: Response) => {
   const cats = await catService.findCats();
   res.status(200).send(cats);
 });
 
-const getCatById = catchAsync(async (req: any, res: any) => {
+const getCatById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const cat = await catService.findCatById(id);
   if (!cat) {
@@ -29,7 +30,7 @@ const getCatById = catchAsync(async (req: any, res: any) => {
   res.status(200).send(cat);
 });
 
-const updateCat = catchAsync(async (req: any, res: any) => {
+const updateCat = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, breed } = req.body;
 
@@ -62,7 +63,7 @@ const updateCat = catchAsync(async (req: any, res: any) => {
   res.status(200).send(updatedCat);
 });
 
-const deleteCat = catchAsync(async (req: any, res: any) => {
+const deleteCat = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const cat = await catService.findCatById(id);
   if (!cat) {

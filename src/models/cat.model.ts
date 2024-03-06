@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 
-const catSchema = new mongoose.Schema({
+export interface ICat {
+  name: string;
+  breed: string;
+  image: string;
+}
+
+export type CatDocument = mongoose.Document & ICat;
+
+const catSchema = new mongoose.Schema<CatDocument>({
   name: {
     type: String,
     required: true,
@@ -15,6 +23,4 @@ const catSchema = new mongoose.Schema({
   },
 });
 
-const Cat = mongoose.model("Cat", catSchema);
-
-export default Cat;
+export const Cat = mongoose.model<CatDocument>("Cat", catSchema);

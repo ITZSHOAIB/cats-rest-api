@@ -1,6 +1,6 @@
-import Cat from "../models/cat.model";
+import { Cat, CatDocument, ICat } from "../models/cat.model";
 
-const saveCat = async (name: string, breed: string, image: string) => {
+const saveCat = async ({ name, breed, image }: ICat): Promise<CatDocument> => {
   const cat = new Cat({
     name,
     breed,
@@ -10,26 +10,25 @@ const saveCat = async (name: string, breed: string, image: string) => {
   return cat;
 };
 
-const findCats = async () => {
+const findCats = async (): Promise<CatDocument[]> => {
   const cats = await Cat.find();
   return cats;
 };
 
-const findCatById = async (id: string) => {
+const findCatById = async (id: string): Promise<CatDocument | null> => {
   const cat = await Cat.findById(id);
   return cat;
 };
 
-const findByIdAndDelete = async (id: string) => {
+const findByIdAndDelete = async (id: string): Promise<CatDocument | null> => {
   const cat = await Cat.findByIdAndDelete(id);
   return cat;
 };
 
-// find by id and update cat
 const findByIdAndUpdate = async (
   id: string,
-  { name, breed, image }: { name?: string; breed?: string; image?: string }
-) => {
+  { name, breed, image }: Partial<ICat>
+): Promise<CatDocument | null> => {
   const updatedCat = await Cat.findByIdAndUpdate(
     id,
     { $set: { name, breed, image } },
