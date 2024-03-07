@@ -4,6 +4,7 @@ export interface ICat {
   name: string;
   breed: string;
   image: string;
+  user: mongoose.Types.ObjectId;
 }
 
 export type CatDocument = mongoose.Document & ICat;
@@ -19,6 +20,11 @@ const catSchema = new mongoose.Schema<CatDocument>({
   },
   image: {
     type: String,
+    required: true,
+  },
+  user: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
     required: true,
   },
 });

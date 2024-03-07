@@ -1,6 +1,17 @@
-export const swaggerOptions = {
-  definition: {
-    openapi: "3.1.0",
+import { Options } from "swagger-jsdoc";
+
+export const swaggerOptions: Options = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
     info: {
       title: "Cat REST API",
       description: "A simple API for managing cats",
