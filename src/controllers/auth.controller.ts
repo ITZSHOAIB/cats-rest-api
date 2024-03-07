@@ -7,7 +7,6 @@ import { IUserAddedRequest } from "../middlewares/auth";
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log(email, password);
 
   const user = await userService.getUserByEmail(email);
   if (user) {

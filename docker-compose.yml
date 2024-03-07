@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  app:
+    container_name: cat-rest-api
+    build:
+      context: ./
+      dockerfile: ./docker-files/DockerFile
+    command: ['npm', 'run', 'dev']
+    restart: on-failure
+    depends_on:
+      - mongo
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      NODE_ENV: 'local'
+      PORT: ${PORT}
+      MONGODB_URI: ${MONGODB_URI}
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo:/data/db
+    restart: always
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    command: --quiet
+
+volumes:
+  mongo:
