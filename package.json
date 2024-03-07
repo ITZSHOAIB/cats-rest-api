@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "node -r dotenv/config dist/index.js",
-    "start:watch": "nodemon -L -r dotenv/config src/index.ts"
+    "start:watch": "nodemon -L -r dotenv/config src/index.ts",
+    "docs": "swagger-jsdoc -d ./dist/docs/swagger.js"
   },
   "author": "",
   "license": "ISC",

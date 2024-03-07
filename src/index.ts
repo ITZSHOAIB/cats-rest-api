@@ -19,6 +19,13 @@ app.use(ExpressMongoSanitize());
 
 const specs = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.get("/api-json", (_, res) => {
+  res.setHeader("Content-Type", "application/json");
+  res.send(specs);
+});
+app.get("/", (_, res) => {
+  res.send("OK");
+});
 
 app.use("/images", express.static("public/images"));
 app.use("/v1", routes);
