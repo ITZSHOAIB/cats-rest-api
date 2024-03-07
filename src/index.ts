@@ -17,8 +17,6 @@ app.use(cors());
 
 app.use(ExpressMongoSanitize());
 
-connectToDatabase(process.env.MONGODB_URI || "");
-
 const specs = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
@@ -28,6 +26,9 @@ app.use("/v1", routes);
 app.use(errorHandler);
 
 const port = process.env.PORT || 3001;
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+
+connectToDatabase(process.env.MONGODB_URI || "").then(() => {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
 });

@@ -5,7 +5,10 @@ services:
     build:
       context: ./
       dockerfile: ./docker-files/DockerFile
-    command: ['npm', 'run', 'dev']
+    command: ['npm', 'run', 'start:watch']
+    volumes:
+      - ./:/app
+      - /app/node_modules
     restart: on-failure
     depends_on:
       - mongo
@@ -17,14 +20,14 @@ services:
       MONGODB_URI: ${MONGODB_URI}
 
   mongo:
-    image: mongo:latest
+    image: mongo
     container_name: mongo
     volumes:
       - mongo:/data/db
     restart: always
     ports:
       - ${MONGODB_PORT}:${MONGODB_PORT}
-    command: --quiet
+    command: mongod --quiet --logpath /dev/null 
 
 volumes:
   mongo:
